@@ -1,16 +1,24 @@
 package com.andrew.springtest;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 public class App {
     Client client;
-    ConsoleEventLogger eventLogger;
+    EventLogger eventLogger;
+
+    public App(Client client, EventLogger eventLogger) {
+        this.client = client;
+        this.eventLogger = eventLogger;
+    }
 
     public static void main(String[] args) {
-        App app = new App();
-
-        app.client = new Client("1", "John Smith");
-        app.eventLogger = new ConsoleEventLogger();
+        //App app = new App();
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        App app = ctx.getBean("app", App.class);
 
         app.logEvent("Some event for user 1");
+        app.logEvent("Some event for user 2");
 
 
     }
